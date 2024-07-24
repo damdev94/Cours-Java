@@ -1,4 +1,4 @@
 public class Vaisseau {
-  String typeDeVaisseau;
-  int NbPassagers;
+  String type;
+  int nbPassagers;
 }

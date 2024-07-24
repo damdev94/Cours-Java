@@ -3,10 +3,15 @@ public class Planete {
   int diametre;
   String matiere;
   int totalVisiteurs;
-  String typeDeVaisseauSurSite;
   Atmosphere atmosphere;
-  Vaisseau vaisseau;
-  boolean vaisseauSurSite = false;
+  Vaisseau vaisseauAccoste;
+  static String forme="Sphérique";
+  static int nbPlanetesDecouvertes;
+
+  Planete(String nom){
+    nbPlanetesDecouvertes++;
+    this.nom = nom;
+  }
 
   int revolution(int degres){
       System.out.println("Je suis la planète "+nom+" et je tourne autour de mon étoile de "+degres+" degrés.");
@@ -18,32 +23,24 @@ public class Planete {
       return degres/360;
   }
 
-  void accueillirVaisseau(Vaisseau vaisseau){
+  Vaisseau accueillirVaisseau(Vaisseau nouveauVaisseau){
 
-    if(vaisseauSurSite == false) {
-      if (vaisseau.typeDeVaisseau.equals("CHASSEUR")){
-        totalVisiteurs += vaisseau.NbPassagers;
-        typeDeVaisseauSurSite = "CHASSEUR";
-        vaisseauSurSite = true;
-      }
-      else if (vaisseau.typeDeVaisseau.equals("FREGATE")){
-        totalVisiteurs += vaisseau.NbPassagers;
-        typeDeVaisseauSurSite = "FREGATE";
-        vaisseauSurSite = true;
-      }
-      else if (vaisseau.typeDeVaisseau.equals("CROISEUR")){
-        totalVisiteurs += vaisseau.NbPassagers;
-        typeDeVaisseauSurSite = "CROISEUR";
-        vaisseauSurSite = true;
-      }
-    }else {
-      System.out.printf("Un vaisseau de type %s est déjà sur site.", typeDeVaisseauSurSite);
-    }
+      totalVisiteurs+=nouveauVaisseau.nbPassagers;
+
+      Vaisseau vaisseauPrecedent=vaisseauAccoste;
+
+      vaisseauAccoste=nouveauVaisseau;
+
+      return vaisseauPrecedent;
+
   }
 
-  void departVaisseau() {
-    vaisseauSurSite = false;
-    System.err.printf("Le vaisseau de type %s a quitté le site.", typeDeVaisseauSurSite);
-    typeDeVaisseauSurSite = null;
+  static String expansion (double milliardsDAnneesLumiere){
+      if (milliardsDAnneesLumiere < 14){
+          return "Oh la la mais c'est super rapide !";
+      }
+      else {
+          return "Je rêve ou c'est plus rapide que la lumière ?";
+      }
   }
 }
