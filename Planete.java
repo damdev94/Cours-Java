@@ -24,6 +24,7 @@ public abstract class Planete {
   }
 
 
+
   static String expansion (double milliardsDAnneesLumiere){
       if (milliardsDAnneesLumiere < 14){
           return "Oh la la mais c'est super rapide !";
