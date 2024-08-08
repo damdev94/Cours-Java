@@ -1,43 +1,58 @@
 
 public class PlaneteTellurique extends Planete implements Habitable{
 
-  Vaisseau vaisseauAccoste;
+  Vaisseau[][] vaisseauxAccostes;
   int totalVisiteurs;
-  Vaisseau [] baie;
 
-  public PlaneteTellurique(String nom, int tailleDeLaBaie) {
+  public PlaneteTellurique(String nom, int nbPlacesBaie) {
       super(nom);
-      this.baie = new Vaisseau[tailleDeLaBaie];
+      vaisseauxAccostes=new Vaisseau[2][nbPlacesBaie];
   }
 
-  boolean restePlaceDisponible(){
-    for(int i = 0; i < baie.length; i++){
-      if(baie[i] == null){
-        return true;
+  boolean restePlaceDisponible(Vaisseau typeOfVaisseau){
+
+    if(typeOfVaisseau instanceof VaisseauDeGuerre)
+      for (int i=0 ; i<vaisseauxAccostes.length ; i++){
+          if (vaisseauxAccostes[0][i]==null){
+              return true;
+          }
       }
-    }
-    return false;
+      else if (typeOfVaisseau instanceof VaisseauCivil){
+        for (int i=0 ; i<vaisseauxAccostes.length ; i++){
+          if (vaisseauxAccostes[1][i]==null){
+              return true;
+          }
+        }
+      }
+      return false;
   }
 
-  public void accueillirVaisseau(Vaisseau nouveauVaisseau) {
+  public void accueillirVaisseaux(Vaisseau... nouveauVaisseaux){
 
-    if (nouveauVaisseau instanceof VaisseauDeGuerre) {
-        ((VaisseauDeGuerre) nouveauVaisseau).desactiverArmes();
-    }
+    for(int i=0; i < nouveauVaisseaux.length; i++){
+      if (nouveauVaisseaux[i] instanceof VaisseauDeGuerre){
+        ((VaisseauDeGuerre)nouveauVaisseaux[i]).desactiverArmes();
+        totalVisiteurs+=nouveauVaisseaux[i].nbPassagers;
 
-    totalVisiteurs += nouveauVaisseau.nbPassagers;
-
-    if (restePlaceDisponible()) {
-        for (int i = 0; i < baie.length; i++) {
-            if (baie[i] == null) {
-                baie[i] = nouveauVaisseau;
-                break;
+        for (int index=0 ; index<vaisseauxAccostes[0].length ; index++){
+          if (vaisseauxAccostes[0][index]==null){
+              vaisseauxAccostes[0][index]=nouveauVaisseaux[i];
+              break;
             }
-        }
+          }
     }
     else {
-      System.out.println("Le vaisseau " + nouveauVaisseau.type.nom + " ne peut pas se poser sur la planète par manque de place dans la baie.");
-    }
-}
 
+      totalVisiteurs+=nouveauVaisseaux[i].nbPassagers;
+
+      for (int index=0 ; index<vaisseauxAccostes[1].length ; index++){
+        if (vaisseauxAccostes[1][index]==null){
+            vaisseauxAccostes[1][index]=nouveauVaisseaux[i];
+            break;
+          }
+        }
+    }
+
+    }
+  }
 }

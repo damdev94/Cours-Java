@@ -1,20 +1,16 @@
 import java.util.Scanner;
 
-import javax.xml.catalog.CatalogResolver;
-
 public class HelloUniverse {
-
-  static boolean exit = false;
 
     public static void main(String... args) {
 
-        PlaneteTellurique mercure = new PlaneteTellurique("Mercure", 4);
+        PlaneteTellurique mercure = new PlaneteTellurique("Mercure", 1);
         mercure.diametre = 4880;
-        PlaneteTellurique venus = new PlaneteTellurique("Venus", 5);
+        PlaneteTellurique venus = new PlaneteTellurique("Venus", 2);
         venus.diametre = 12100;
-        PlaneteTellurique terre = new PlaneteTellurique("Terre", 1);
+        PlaneteTellurique terre = new PlaneteTellurique("Terre", 100);
         terre.diametre = 12756;
-        PlaneteTellurique mars = new PlaneteTellurique("Mars", 0);
+        PlaneteTellurique mars = new PlaneteTellurique("Mars", 5);
         mars.diametre = 6792;
         PlaneteGazeuse jupiter = new PlaneteGazeuse("Jupiter");
         jupiter.diametre = 142984;
@@ -51,63 +47,65 @@ public class HelloUniverse {
         vaisseauMonde.resistanceDuBouclier = 30;
 
         Scanner sc = new Scanner(System.in);
+        boolean recommencer = true;
+        while (recommencer) {
+            System.out.println("Quel vaisseau souhaitez vous manipuler​ : " + TypeVaisseau.CHASSEUR.name() + ", " + TypeVaisseau.FREGATE.name() + ", " + TypeVaisseau.CROISEUR.name() + ", " + TypeVaisseau.CARGO.name() + " ou " + TypeVaisseau.VAISSEAUMONDE.name() + " ?");
+            String typeVaisseauString = sc.nextLine();
+            TypeVaisseau typeVaisseau = TypeVaisseau.valueOf(typeVaisseauString);
+            Vaisseau vaisseauSelectionne = null;
+            switch (typeVaisseau) {
+                case CHASSEUR:
+                    vaisseauSelectionne = chasseur;
+                    break;
+                case FREGATE:
+                    vaisseauSelectionne = fregate;
+                    break;
+                case CROISEUR:
+                    vaisseauSelectionne = croiseur;
+                    break;
+                case CARGO:
+                    vaisseauSelectionne = cargo;
+                    break;
+                case VAISSEAUMONDE:
+                    vaisseauSelectionne = vaisseauMonde;
+                    break;
+            }
 
+            System.out.println("Sur quelle planète tellurique du systeme solaire voulez-vous vous poser : Mercure, Venus, Terre ou Mars ?");
+            String nomPlanete = sc.nextLine();
+            PlaneteTellurique planeteSelectionnee = null;
+            switch (nomPlanete) {
+                case "Mercure":
+                    planeteSelectionnee = mercure;
+                    break;
+                case "Venus":
+                    planeteSelectionnee = venus;
+                    break;
+                case "Terre":
+                    planeteSelectionnee = terre;
+                    break;
+                case "Mars":
+                    planeteSelectionnee = mars;
+                    break;
 
-        while (!exit) {
+            }
 
-          System.out.println("Quel vaisseau souhaitez vous manipuler​ : CHASSEUR, FREGATE, CROISEUR, CARGO ou VAISSEAUMONDE ?");
-          String vaisseauSelectionne = sc.nextLine();
-          TypeVaisseau typevaisseau =  TypeVaisseau.valueOf(vaisseauSelectionne);
-          Vaisseau vaisseau = null;
-          switch (typevaisseau) {
-              case CHASSEUR:
-                  vaisseau = chasseur;
-                  break;
-              case FREGATE:
-                  vaisseau = fregate;
-                  break;
-              case CROISEUR:
-                  vaisseau = croiseur;
-                  break;
-              case CARGO:
-                  vaisseau = cargo;
-                  break;
-              case VAISSEAUMONDE:
-                  vaisseau = vaisseauMonde;
-                  break;
-          }
+            System.out.println("Quel tonnage souhaitez-vous emporter ?");
+            int tonnageSouhaite = sc.nextInt();
 
-          System.out.println("Sur quelle planète tellurique du systeme solaire voulez-vous vous poser : Mercure, Venus, Terre ou Mars ?");
-          String nomPlanete = sc.nextLine();
-          PlaneteTellurique planeteSelectionnee = null;
-          switch (nomPlanete) {
-              case "Mercure":
-                  planeteSelectionnee = mercure;
-                  break;
-              case "Venus":
-                  planeteSelectionnee = venus;
-                  break;
-              case "Terre":
-                  planeteSelectionnee = terre;
-                  break;
-              case "Mars":
-                  planeteSelectionnee = mars;
-                  break;
+            if (planeteSelectionnee.restePlaceDisponible(vaisseauSelectionne)) {
+                planeteSelectionnee.accueillirVaisseaux(vaisseauSelectionne);
+                System.out.println("Le vaisseau a rejeté : " + vaisseauSelectionne.emporterCargaison(tonnageSouhaite) + " tonnes.");
+            } else {
+                System.out.println("Le vaisseau ne peut pas se poser sur la planète par manque de place dans la baie.");
+            }
 
-          }
+            sc.nextLine();
+            System.out.println("Voulez-vous recommencer oui/non ?");
 
-          System.out.println("Quel tonnage souhaitez-vous emporter ?");
-          int tonnageSouhaite = Integer.parseInt(sc.nextLine());
+            recommencer = sc.nextLine().equals("oui");
 
-          planeteSelectionnee.accueillirVaisseau(vaisseau);
-          System.out.println("Le vaisseau a rejeté : " + vaisseau.emporterCargaison(tonnageSouhaite) + " tonnes.");
+        }
+    }
 
-          System.out.println("Voulez-vous recomencer ? oui ou non");
-          String reponse = sc.nextLine();
-          if (reponse.equals("non")) {
-            exit = true;
-          }
-      }
-      sc.close();
-  }
 }
