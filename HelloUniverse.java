@@ -21,6 +21,16 @@ public class HelloUniverse {
         PlaneteGazeuse neptune = new PlaneteGazeuse("Neptune");
         neptune.diametre = 49532;
 
+        Galaxie systemeSolaire = new Galaxie("system solaire");
+        systemeSolaire.AjouterPlanete(mercure);
+        systemeSolaire.AjouterPlanete(venus);
+        systemeSolaire.AjouterPlanete(terre);
+        systemeSolaire.AjouterPlanete(mars);
+        systemeSolaire.AjouterPlanete(jupiter);
+        systemeSolaire.AjouterPlanete(saturne);
+        systemeSolaire.AjouterPlanete(uranus);
+        systemeSolaire.AjouterPlanete(neptune);
+
         Vaisseau chasseur = new VaisseauDeGuerre(TypeVaisseau.CHASSEUR);
         chasseur.nbPassagers = 3;
         chasseur.blindage = 156;
@@ -71,40 +81,30 @@ public class HelloUniverse {
                     break;
             }
 
-            System.out.println("Sur quelle planète tellurique du systeme solaire voulez-vous vous poser : Mercure, Venus, Terre ou Mars ?");
-            String nomPlanete = sc.nextLine();
-            PlaneteTellurique planeteSelectionnee = null;
-            switch (nomPlanete) {
-                case "Mercure":
-                    planeteSelectionnee = mercure;
-                    break;
-                case "Venus":
-                    planeteSelectionnee = venus;
-                    break;
-                case "Terre":
-                    planeteSelectionnee = terre;
-                    break;
-                case "Mars":
-                    planeteSelectionnee = mars;
-                    break;
+            System.out.println("Sur quelle index de planète tellurique du systeme solaire voulez-vous vous poser : 0 a 7");
+            int nbPlanete = sc.nextInt();
+            Planete planeteSelectionnee = null;
+            planeteSelectionnee = (Planete) systemeSolaire.planetes.get(nbPlanete);
 
-            }
+            if(planeteSelectionnee instanceof PlaneteTellurique){
 
-            System.out.println("Quel tonnage souhaitez-vous emporter ?");
-            int tonnageSouhaite = sc.nextInt();
+              System.out.println("Quel tonnage souhaitez-vous emporter ?");
+              int tonnageSouhaite = sc.nextInt();
+              sc.nextLine();
 
-            if (planeteSelectionnee.restePlaceDisponible(vaisseauSelectionne)) {
-                planeteSelectionnee.accueillirVaisseaux(vaisseauSelectionne);
+              if (((PlaneteTellurique) planeteSelectionnee).restePlaceDisponible(vaisseauSelectionne)) {
+                ((PlaneteTellurique) planeteSelectionnee).accueillirVaisseaux(vaisseauSelectionne);
                 System.out.println("Le vaisseau a rejeté : " + vaisseauSelectionne.emporterCargaison(tonnageSouhaite) + " tonnes.");
-            } else {
-                System.out.println("Le vaisseau ne peut pas se poser sur la planète par manque de place dans la baie.");
+              }
+              else {
+                  System.out.println("Le vaisseau ne peut pas planeteSelectionneese poser sur la planète par manque de place dans la baie.");
+              }
             }
-
-            sc.nextLine();
-            System.out.println("Voulez-vous recommencer oui/non ?");
-
+            else {
+              System.out.println("La planete selectionné n'est pas une planete tellurique ");
+            }
+              System.out.println("Voulez-vous recommencer oui/non ?");
             recommencer = sc.nextLine().equals("oui");
-
         }
     }
 
