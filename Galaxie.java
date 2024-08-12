@@ -1,12 +1,14 @@
-import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
+
 
 public class Galaxie {
   String nom;
-  ArrayList<Planete> planetes;
+  Set <Planete> planetes;
 
   Galaxie(String nom){
     this.nom = nom;
-    this.planetes = new ArrayList<>();
+    this.planetes = new HashSet<Planete>();
   }
 
   void AjouterPlanete(Planete planete){

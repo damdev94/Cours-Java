@@ -81,10 +81,18 @@ public class HelloUniverse {
                     break;
             }
 
-            System.out.println("Sur quelle index de planète tellurique du systeme solaire voulez-vous vous poser : 0 a 7");
-            int nbPlanete = sc.nextInt();
+            System.out.println("Sur quelle planète tellurique du systeme solaire voulez-vous vous poser ?");
+            String nomPlanete = sc.nextLine();
             Planete planeteSelectionnee = null;
-            planeteSelectionnee = (Planete) systemeSolaire.planetes.get(nbPlanete);
+            planeteSelectionnee = null;
+            for (Planete planete : systemeSolaire.planetes) {
+              if (planete.nom.equals(nomPlanete)){
+                planeteSelectionnee = planete;
+              }
+            }
+            if(planeteSelectionnee == null) {
+              System.out.println("aucune planete trouvé");
+            }
 
             if(planeteSelectionnee instanceof PlaneteTellurique){
 
