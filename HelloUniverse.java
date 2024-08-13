@@ -10,8 +10,15 @@ public class HelloUniverse {
         venus.diametre = 12100;
         PlaneteTellurique terre = new PlaneteTellurique("Terre", 100);
         terre.diametre = 12756;
+
         PlaneteTellurique mars = new PlaneteTellurique("Mars", 5);
         mars.diametre = 6792;
+        mars.atmosphere = new Atmosphere();
+        mars.atmosphere.constituants.put("CO2", 95f);
+        mars.atmosphere.constituants.put("N2", 3f);
+        mars.atmosphere.constituants.put("AR", 1.5f);
+        mars.atmosphere.constituants.put("NO", 0.013f);
+
         PlaneteGazeuse jupiter = new PlaneteGazeuse("Jupiter");
         jupiter.diametre = 142984;
         PlaneteGazeuse saturne = new PlaneteGazeuse("Saturne");
@@ -20,6 +27,7 @@ public class HelloUniverse {
         uranus.diametre = 51118;
         PlaneteGazeuse neptune = new PlaneteGazeuse("Neptune");
         neptune.diametre = 49532;
+
 
         Galaxie systemeSolaire = new Galaxie("system solaire");
         systemeSolaire.AjouterPlanete(mercure);
@@ -58,7 +66,12 @@ public class HelloUniverse {
 
         Scanner sc = new Scanner(System.in);
         boolean recommencer = true;
-        while (recommencer) {
+
+        for (String constituant : mars.atmosphere.constituants.keySet()) {
+          Float pourcentage = mars.atmosphere.constituants.get(constituant);
+          System.out.println(pourcentage +"% de " + constituant);
+        }
+       /*  while (recommencer) {
             System.out.println("Quel vaisseau souhaitez vous manipuler​ : " + TypeVaisseau.CHASSEUR.name() + ", " + TypeVaisseau.FREGATE.name() + ", " + TypeVaisseau.CROISEUR.name() + ", " + TypeVaisseau.CARGO.name() + " ou " + TypeVaisseau.VAISSEAUMONDE.name() + " ?");
             String typeVaisseauString = sc.nextLine();
             TypeVaisseau typeVaisseau = TypeVaisseau.valueOf(typeVaisseauString);
@@ -113,7 +126,6 @@ public class HelloUniverse {
             }
               System.out.println("Voulez-vous recommencer oui/non ?");
             recommencer = sc.nextLine().equals("oui");
-        }
+        } */
     }
-
 }

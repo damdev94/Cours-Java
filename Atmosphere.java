@@ -1,9 +1,12 @@
+import java.util.HashMap;
+
 public class Atmosphere {
-  Float tauxHelium;
+  HashMap<String, Float> constituants =  new HashMap<>();
+/*   Float tauxHelium;
   Float tauxHydrogene;
   Float tauxAzote;
   Float tauxArgon;
   Float tauxDioxydeDeCarbone;
   Float tauxSodium;
-  Float tauxMethane;
+  Float tauxMethane; */
 }
