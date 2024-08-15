@@ -1,3 +1,4 @@
+package com.espacex.decouverte.enginsspatiaux;
 public class VaisseauCivil extends Vaisseau {
 
   public VaisseauCivil(TypeVaisseau type) {
@@ -10,7 +11,7 @@ public class VaisseauCivil extends Vaisseau {
 
   }
 
-  int emporterCargaison(int tonnage) {
+  public int emporterCargaison(int tonnage) {
 
       int tonnageRestant = tonnageMax - tonnageActuel;
       if (tonnage > tonnageRestant) {

@@ -1,9 +1,10 @@
+package com.espacex.decouverte.objetsastro;
 
-public abstract class Planete {
-  String nom;
-  int diametre;
-
-  Atmosphere atmosphere;
+public abstract class Planete implements Comparable {
+  public String nom;
+  public int diametre;
+  public Atmosphere atmosphere;
+  public float distanceEtoile;
 
   static String forme="Sphérique";
   static int nbPlanetesDecouvertes;
@@ -21,6 +22,11 @@ public abstract class Planete {
   int rotation(int degres){
       System.out.println("Je suis la planète "+nom+" et je tourne sur moi-même de "+degres+" degrés.");
       return degres/360;
+  }
+
+  public int compareTo(Object o) {
+    Planete autreplanete = (Planete)o;
+    return ((Float)distanceEtoile).compareTo(autreplanete.distanceEtoile);
   }
 
 
