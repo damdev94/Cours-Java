@@ -14,12 +14,12 @@ public abstract class Planete implements Comparable {
       nbPlanetesDecouvertes++;
   }
 
-  int revolution(int degres){
+  public final int revolution(int degres){
       System.out.println("Je suis la planète "+nom+" et je tourne autour de mon étoile de "+degres+" degrés.");
       return degres/360;
   }
 
-  int rotation(int degres){
+  public final int rotation(int degres){
       System.out.println("Je suis la planète "+nom+" et je tourne sur moi-même de "+degres+" degrés.");
       return degres/360;
   }

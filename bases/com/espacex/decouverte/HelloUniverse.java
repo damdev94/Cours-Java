@@ -1,6 +1,7 @@
 package com.espacex.decouverte;
 import java.util.Scanner;
 
+import com.espacex.decouverte.enginsspatiaux.DepassementTonnageException;
 import com.espacex.decouverte.enginsspatiaux.TypeVaisseau;
 import com.espacex.decouverte.enginsspatiaux.Vaisseau;
 import com.espacex.decouverte.enginsspatiaux.VaisseauCivil;
@@ -33,6 +34,7 @@ public class HelloUniverse {
         atmospherMars.constituants.put("AR", 1.5f);
         atmospherMars.constituants.put("NO", 0.013f);
         mars.atmosphere = atmospherMars;
+
 
         PlaneteGazeuse jupiter = new PlaneteGazeuse("Jupiter");
         jupiter.diametre = 142984;
@@ -139,6 +141,12 @@ public class HelloUniverse {
 
                 if (((PlaneteTellurique) planeteSelectionnee).restePlaceDisponible(vaisseauSelectionne)) {
                     ((PlaneteTellurique) planeteSelectionnee).accueillirVaisseaux(vaisseauSelectionne);
+                    try {
+                      vaisseauSelectionne.emporterCargaison(tonnageSouhaite);
+                    } catch (DepassementTonnageException dte) {
+                      System.out.println("Le vaisseau a rejeté : " + dte.tonnageEnExces + " tonnes.");
+                      System.out.println("Voulez-vous emporter un tonnage partiel à hauteur de " + tonnageSouhaite - dte.tonnageEnExces+ "oui / non ");
+                    }
                     System.out.println("Le vaisseau a rejeté : " + vaisseauSelectionne.emporterCargaison(tonnageSouhaite) + " tonnes.");
                 } else {
                     System.out.println("Le vaisseau ne peut pas se poser sur la planète par manque de place dans la baie.");

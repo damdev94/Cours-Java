@@ -1,10 +1,10 @@
 package com.espacex.decouverte.enginsspatiaux;
 public class VaisseauDeGuerre extends Vaisseau {
 
-  boolean armesDesactivees;
+  private boolean armesDesactivees;
 
   public VaisseauDeGuerre(TypeVaisseau type){
-      this.type=type;
+      super(type);
       if (type == TypeVaisseau.CHASSEUR){
           tonnageMax=0;
       }
@@ -32,30 +32,35 @@ public class VaisseauDeGuerre extends Vaisseau {
       armesDesactivees = true;
   }
 
+  public void activerArmes() {
+    System.out.println(("Activation des armes d'un vaisseau de type " + type));
+    armesDesactivees = false ;
+  }
+
   void activerBouclier(){
       System.out.println("Activation du bouclier d'un vaisseau de type "+type+".");
       desactiverArmes();
   }
 
-  public int emporterCargaison (int cargaison){
+  public void emporterCargaison (int cargaison) throws DepassementTonnageException{
 if (type.equals("CHASSEUR")){
-          return cargaison;
+          return;
       }
       else {
           if (nbPassagers<12){
-              return cargaison;
+              return;
           }
           else {
               int tonnagePassagers=nbPassagers*2;
               int tonnageRestant=tonnageMax-tonnageActuel;
               int tonnageAConsiderer=(tonnagePassagers<tonnageRestant ? tonnagePassagers : tonnageRestant);
               if (cargaison>tonnageAConsiderer){
-                  tonnageActuel=tonnageMax;
-                  return cargaison-tonnageAConsiderer;
+                  int tonnageEnExces = cargaison - tonnageAConsiderer;
+                  throw new DepassementTonnageException(tonnageEnExces);
               }
               else {
                   tonnageActuel+=cargaison;
-                  return 0;
+                  return;
               }
           }
       }

@@ -2,7 +2,7 @@ package com.espacex.decouverte.enginsspatiaux;
 public class VaisseauCivil extends Vaisseau {
 
   public VaisseauCivil(TypeVaisseau type) {
-      this.type = type;
+      super(type);
       if (type == TypeVaisseau.CARGO) {
           tonnageMax = 500;
       } else if (type == TypeVaisseau.VAISSEAUMONDE) {
@@ -11,15 +11,14 @@ public class VaisseauCivil extends Vaisseau {
 
   }
 
-  public int emporterCargaison(int tonnage) {
+  public void emporterCargaison(int tonnage) throws DepassementTonnageException{
 
       int tonnageRestant = tonnageMax - tonnageActuel;
       if (tonnage > tonnageRestant) {
-          tonnageActuel = tonnageMax;
-          return tonnage-tonnageRestant;
+        int tonnageEnExces = tonnage - tonnageRestant;
+        throw new DepassementTonnageException(tonnageEnExces);
       }
       tonnageActuel+=tonnage;
-      return 0;
   }
 
 }
